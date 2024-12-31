@@ -36,5 +36,13 @@ func main() {
 		if err := c.Stop(); err != nil {
 			log.Fatal(err)
 		}
+	case "status":
+		if lines, err := c.Status(); err != nil {
+			log.Fatal(err)
+		} else {
+			for _, l := range lines {
+				fmt.Printf("%s\n", l)
+			}
+		}
 	}
 }

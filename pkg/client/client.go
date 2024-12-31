@@ -74,9 +74,24 @@ func (c *Client) LogReopen() {
 }
 
 // Status of server
-func (c *Client) Status() {
-	//TODO implement me
-	panic("implement me")
+func (c *Client) Status() ([]string, error) {
+	if err := c.sendCmd(cmdStatus); err != nil {
+		return nil, err
+	}
+
+	// Issue: There is no end of message
+	// https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L1249
+	lines := make([]string, 0, 2)
+	for {
+		if reply, err := c.readReply(); err != nil {
+			return nil, err
+		} else {
+			if reply == "" {
+				return lines, nil
+			}
+			lines = append(lines, reply)
+		}
+	}
 }
 
 func (c *Client) Stats() {
