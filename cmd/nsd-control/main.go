@@ -10,6 +10,7 @@ import (
 const defaultSocket = "/var/run/nsd.sock"
 
 func main() {
+	addr := flag.String("i", defaultSocket, "server address and port, or socket path")
 	flag.Parse()
 	posArgs := flag.Args()
 
@@ -18,11 +19,12 @@ func main() {
 		return
 	}
 
-	c, err := client.NewUNIXSocketClient(defaultSocket)
+	// TODO check if we got an IP
+	c, err := client.NewUNIXSocketClient(*addr)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer func(c client.Client) {
+	defer func(c *client.Client) {
 		err := c.Close()
 		if err != nil {
 			panic(err)

@@ -1,0 +1,8 @@
+services:
+  nsd:
+    build: ./nsd/
+    volumes:
+      - ./config:/etc/nsd:ro
+      - ./sock:/var/run/nsd
+    ports:
+      - "5353"

@@ -4,7 +4,7 @@ import (
 	"net"
 )
 
-func NewUNIXSocketClient(path string) (Client, error) {
+func NewUNIXSocketClient(path string) (*Client, error) {
 	conn, err := net.Dial("unix", path)
 	if err != nil {
 		return nil, err
