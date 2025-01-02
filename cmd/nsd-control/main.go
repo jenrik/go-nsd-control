@@ -29,14 +29,15 @@ func (s SimpleAddr) String() string {
 
 func main() {
 	connUrl := flag.String("i", defaultSocket, "server address and port, or socket path")
-	caPath := flag.String("ca", "", "TODO")
-	clientCertPath := flag.String("client-cert", "", "TODO")
-	clientKeyPath := flag.String("client-key", "", "TODO")
+	caPath := flag.String("ca", "", "Server CA certificate path")
+	clientCertPath := flag.String("client-cert", "", "Client certificate path")
+	clientKeyPath := flag.String("client-key", "", "Client private key path")
 	flag.Parse()
 	posArgs := flag.Args()
 
 	if len(posArgs) < 1 {
-		fmt.Println("Usage: nsd-control <cmd>")
+		_, _ = os.Stderr.WriteString("Usage: nsd-control <cmd>\n\n")
+		flag.PrintDefaults()
 		return
 	}
 
