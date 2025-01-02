@@ -1,0 +1,8 @@
+# Auto generated via gen-cert.sh
+domain.csr
+domain.crt
+domain-bundle.crt
+domain.key
+rootCA.crt
+rootCA.key
+rootCA.srl

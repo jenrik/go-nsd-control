@@ -5,4 +5,5 @@ services:
       - ./config:/etc/nsd:ro
       - ./sock:/var/run/nsd
     ports:
-      - "5353"
+      - "5353:5353"
+      - "8952:8952"
