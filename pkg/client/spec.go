@@ -60,3 +60,15 @@ const (
 	// Error messages always start with this sequence
 	replyError = "error"
 )
+
+type CookieSecrets struct {
+	Source  string
+	Active  string
+	Staging *string
+}
+
+type ZoneStatus struct {
+	Zone       string
+	State      string
+	Attributes map[string]string
+}
