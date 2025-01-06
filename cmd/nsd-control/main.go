@@ -109,5 +109,29 @@ func doCommand(c *client.Client, cmd string) {
 				fmt.Printf("%s\n", l)
 			}
 		}
+	case "stats":
+		if lines, err := c.Stats(); err != nil {
+			log.Fatal(err)
+		} else {
+			for _, l := range lines {
+				fmt.Printf("%s\n", l)
+			}
+		}
+	case "serverpid":
+		if pid, err := c.ServerPID(); err != nil {
+			log.Fatal(err)
+		} else {
+			fmt.Println(pid)
+		}
+	case "print_cookie_secrets":
+		if cookieSecrets, err := c.GetCookieSecrets(); err != nil {
+			log.Fatal(err)
+		} else {
+			fmt.Printf("source : \"%v\"\n", cookieSecrets.Source)
+			fmt.Printf("active : %v\n", cookieSecrets.Active)
+			if cookieSecrets.Staging != nil {
+				fmt.Printf("staging: %v\n", *cookieSecrets.Staging)
+			}
+		}
 	}
 }
