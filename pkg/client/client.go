@@ -187,6 +187,7 @@ func (c *Client) AddZone(domain string, pattern string) error {
 }
 
 func (c *Client) DelZone(domain string) error {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L1541
 	cmd := fmt.Sprintf("%s %s", cmdDelZone, domain)
 	if err := c.sendCmd(cmd); err != nil {
 		return err
@@ -196,6 +197,7 @@ func (c *Client) DelZone(domain string) error {
 }
 
 func (c *Client) ChangeZone(domain string, pattern string) error {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L1550
 	cmd := fmt.Sprintf("%s %s %s", cmdChangeZone, domain, pattern)
 	if err := c.sendCmd(cmd); err != nil {
 		return err
@@ -205,26 +207,31 @@ func (c *Client) ChangeZone(domain string, pattern string) error {
 }
 
 func (c *Client) Write(zones []string) {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L915
 	//TODO implement me
 	panic("implement me")
 }
 
 func (c *Client) Notify(zones []string) {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L928
 	//TODO implement me
 	panic("implement me")
 }
 
 func (c *Client) Transfer(zones []string) {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L953
 	//TODO implement me
 	panic("implement me")
 }
 
 func (c *Client) ForceTransfer(zones []string) {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L994
 	//TODO implement me
 	panic("implement me")
 }
 
 func (c *Client) ZoneStatus(zone string) (*ZoneStatus, error) {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L1033
 	if err := c.sendCmd(cmdServerPID); err != nil {
 		return nil, err
 	}
@@ -233,6 +240,7 @@ func (c *Client) ZoneStatus(zone string) (*ZoneStatus, error) {
 }
 
 func parseZoneStatus(c replyReader) (*ZoneStatus, error) {
+	// NSD handler:
 	status := &ZoneStatus{
 		Attributes: make(map[string]string),
 	}
@@ -273,7 +281,7 @@ func parseZoneStatus(c replyReader) (*ZoneStatus, error) {
 }
 
 func (c *Client) ServerPID() (int, error) {
-	// NSD handler: https://github.com/NLnetLabs/nsd/blob/c628f663d9069c0ee670eeccecd56cc9c09bc884/remote.c#L2130
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L2130
 	if err := c.sendCmd(cmdServerPID); err != nil {
 		return -1, err
 	}
@@ -290,7 +298,7 @@ func (c *Client) ServerPID() (int, error) {
 }
 
 func (c *Client) Verbosity(verbosity int) error {
-	// NSD handler: https://github.com/NLnetLabs/nsd/blob/c628f663d9069c0ee670eeccecd56cc9c09bc884/remote.c#L1187
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L1187
 	cmd := fmt.Sprintf("%s %d", cmdVerbosity, verbosity)
 	if err := c.sendCmd(cmd); err != nil {
 		return err
@@ -300,31 +308,37 @@ func (c *Client) Verbosity(verbosity int) error {
 }
 
 func (c *Client) GetTSig(keyName []string) {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L2137
 	//TODO implement me
 	panic("implement me")
 }
 
 func (c *Client) UpdateTSig(name string, secret string) {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L2159
 	//TODO implement me
 	panic("implement me")
 }
 
 func (c *Client) AddTSig(name string, secret string, algo *string) {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L2210
 	//TODO implement me
 	panic("implement me")
 }
 
 func (c *Client) AssocTSig(zone string, keyName string) {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L2289
 	//TODO implement me
 	panic("implement me")
 }
 
 func (c *Client) DelTSig(keyName string) {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L2348
 	//TODO implement me
 	panic("implement me")
 }
 
 func (c *Client) AddCookieSecret(secret string) error {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L2500
 	cmd := fmt.Sprintf("%s %s", cmdAddCookieSecret, secret)
 	if err := c.sendCmd(cmd); err != nil {
 		return err
@@ -354,6 +368,7 @@ func parseAddCookieSecretReply(c replyReader) error {
 }
 
 func (c *Client) DropCookieSecret() error {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L2474
 	if err := c.sendCmd(cmdDropCookieSecret); err != nil {
 		return err
 	}
@@ -362,6 +377,7 @@ func (c *Client) DropCookieSecret() error {
 }
 
 func (c *Client) ActivateCookieSecret() error {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L2448
 	if err := c.sendCmd(cmdActivateCookieSecret); err != nil {
 		return err
 	}
@@ -372,6 +388,7 @@ func (c *Client) ActivateCookieSecret() error {
 var commonKeyValueRegex = regexp.MustCompile(`^\s*(?P<key>[^:\s]+)\s*:\s+"?(?P<value>[^"].*?)"?$`)
 
 func (c *Client) GetCookieSecrets() (*CookieSecrets, error) {
+	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L2549
 	if err := c.sendCmd(cmdPrintCookieSecrets); err != nil {
 		return nil, err
 	}
