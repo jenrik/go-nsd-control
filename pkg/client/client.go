@@ -10,6 +10,7 @@ import (
 )
 
 // Transport agnostic Client for the NSD server's control socket.
+// Client is a transport agnostic client for the NSD server's control socket.
 // This is *not* thread-safe, it's the consumers responsibility to protect the Client from concurrent use.
 type Client struct {
 	// Server-side command parsing logic: https://github.com/NLnetLabs/nsd/blob/149049ca0a8e5536d2cfe60461b9f74d4f8ccc02/remote.c#L2606
@@ -95,7 +96,6 @@ func (c *Client) Reload(zones []string) {
 
 // Repattern reloads the config file.
 // Alias of reconfig, https://github.com/NLnetLabs/nsd/blob/149049ca0a8e5536d2cfe60461b9f74d4f8ccc02/remote.c#L2640-L2643
-// proto: repattern
 func (c *Client) Repattern() {
 	// NSD handler: https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L2047
 	//TODO implement me
@@ -161,8 +161,6 @@ func (c *Client) StatsNoReset() ([]string, error) {
 		return nil, err
 	}
 
-	// Issue: There is no end of message
-	// https://github.com/NLnetLabs/nsd/blob/NSD_4_11_0_REL/remote.c#L1249
 	lines := make([]string, 0, 2)
 	for {
 		if reply, err := c.readLine(); err != nil {
